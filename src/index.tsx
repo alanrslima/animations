@@ -1,10 +1,10 @@
 import React from 'react';
 
-import {ScrollTransition, GalleryList, Timer} from './modules';
+import {MindBlowing} from './modules';
 // import { Container } from './styles';
 
 const App = () => {
-  return <Timer />;
+  return <MindBlowing />;
 };
 
 export default App;
