@@ -9,6 +9,7 @@ import AnimatedTabs from './AnimatedTabs';
 import ProgressBar from './ProgressBar';
 import ParallaxCarousel from './ParallaxCarousel';
 import StickyFooter from './StickyFooter';
+import Carousel from './Carousel';
 
 export {
   ScrollTransition,
@@ -22,4 +23,5 @@ export {
   ProgressBar,
   ParallaxCarousel,
   StickyFooter,
+  Carousel,
 };
