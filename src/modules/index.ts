@@ -8,6 +8,7 @@ import ZaraCarrousel from './ZaraCarrousel';
 import AnimatedTabs from './AnimatedTabs';
 import ProgressBar from './ProgressBar';
 import ParallaxCarousel from './ParallaxCarousel';
+import StickyFooter from './StickyFooter';
 
 export {
   ScrollTransition,
@@ -20,4 +21,5 @@ export {
   AnimatedTabs,
   ProgressBar,
   ParallaxCarousel,
+  StickyFooter,
 };

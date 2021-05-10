@@ -15,8 +15,6 @@ export default function App() {
     return arrModules;
   };
 
-  console.log('Render screen');
-
   return (
     <NavigationContainer>
       <Stack.Navigator>
