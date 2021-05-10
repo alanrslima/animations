@@ -10,6 +10,7 @@ import ProgressBar from './ProgressBar';
 import ParallaxCarousel from './ParallaxCarousel';
 import StickyFooter from './StickyFooter';
 import Carousel from './Carousel';
+import ImagesCarousel from './ImagesCarousel';
 
 export {
   ScrollTransition,
@@ -24,4 +25,5 @@ export {
   ParallaxCarousel,
   StickyFooter,
   Carousel,
+  ImagesCarousel,
 };
