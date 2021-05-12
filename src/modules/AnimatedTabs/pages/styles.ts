@@ -38,8 +38,8 @@ export default StyleSheet.create({
   containerIndicator: {
     position: 'absolute',
     height: 4,
-    width: 100,
     backgroundColor: 'white',
     bottom: -10,
+    left: 0,
   },
 });

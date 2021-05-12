@@ -1,5 +1,5 @@
-import React, {useRef} from 'react';
-import styles from './styles';
+import React, {useRef, useState, useCallback} from 'react';
+import styles, {width} from './styles';
 import {
   Text,
   View,
@@ -7,6 +7,7 @@ import {
   Image,
   Animated,
   findNodeHandle,
+  TouchableOpacity,
 } from 'react-native';
 
 const images = {
@@ -28,52 +29,100 @@ const data = Object.keys(images).map((i) => ({
   ref: React.createRef(),
 }));
 
-const Tab = React.forwardRef(({item}, ref) => {
+const Tab = React.forwardRef(({item, onItemPress}, ref) => {
   return (
-    <View ref={ref}>
-      <Text style={[styles.tabText, {fontSize: 84 / data.length}]}>
-        {item.title}
-      </Text>
-    </View>
+    <TouchableOpacity onPress={onItemPress}>
+      <View ref={ref}>
+        <Text style={[styles.tabText, {fontSize: 84 / data.length}]}>
+          {item.title}
+        </Text>
+      </View>
+    </TouchableOpacity>
   );
 });
 
-const Indicator = () => {
-  return <View style={styles.containerIndicator} />;
+const Indicator = ({
+  measures,
+  scrollX,
+}: {
+  measures: any;
+  scrollX: Animated.Value;
+}) => {
+  const inputRange = data.map((_, index) => index * width);
+  const indicatorWidth = scrollX.interpolate({
+    inputRange,
+    outputRange: measures.map((measure) => measure.width),
+  });
+
+  const translateX = scrollX.interpolate({
+    inputRange,
+    outputRange: measures.map((measure) => measure.x),
+  });
+
+  return (
+    <Animated.View
+      style={[
+        styles.containerIndicator,
+        {width: indicatorWidth, transform: [{translateX}]},
+      ]}
+    />
+  );
 };
 
-const Tabs = ({data, scrollX}) => {
+const Tabs = ({data, scrollX, onItemPress}) => {
   const containerRef = React.useRef();
+  const [measures, setMeasures] = useState([]);
 
   React.useEffect(() => {
+    const m = [];
     data.forEach((item) => {
       item.ref.current.measureLayout(
         containerRef.current,
         (x, y, width, height) => {
-          console.log(x, y, width, height);
+          m.push({x, y, width, height});
+          if (m.length === data.length) {
+            setMeasures(m);
+          }
         },
       );
     });
-  });
+  }, [data]);
+
   return (
     <View style={styles.containerTabs}>
       <View ref={containerRef} style={styles.contentTabs}>
-        {data.map((item) => {
-          return <Tab key={item.key} item={item} ref={item.ref} />;
+        {data.map((item, index) => {
+          return (
+            <Tab
+              key={item.key}
+              item={item}
+              ref={item.ref}
+              onItemPress={() => onItemPress(index)}
+            />
+          );
         })}
       </View>
-      <Indicator />
+      {measures.length > 0 && (
+        <Indicator measures={measures} scrollX={scrollX} />
+      )}
     </View>
   );
 };
 
 export default function App() {
   const scrollX = useRef(new Animated.Value(0)).current;
+  const ref = useRef();
+  const onItemPress = useCallback((itemIndex) => {
+    ref?.current?.scrollToOffset({
+      offset: itemIndex * width,
+    });
+  }, []);
 
   return (
     <View style={styles.container}>
       <StatusBar hidden />
       <Animated.FlatList
+        ref={ref}
         data={data}
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -93,7 +142,7 @@ export default function App() {
           );
         }}
       />
-      <Tabs scrollX={scrollX} data={data} />
+      <Tabs scrollX={scrollX} data={data} onItemPress={onItemPress} />
     </View>
   );
 }
