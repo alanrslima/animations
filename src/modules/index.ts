@@ -11,6 +11,7 @@ import ParallaxCarousel from './ParallaxCarousel';
 import StickyFooter from './StickyFooter';
 import Carousel from './Carousel';
 import ImagesCarousel from './ImagesCarousel';
+import Modal from './Modal';
 
 export {
   ScrollTransition,
@@ -26,4 +27,5 @@ export {
   StickyFooter,
   Carousel,
   ImagesCarousel,
+  Modal,
 };
