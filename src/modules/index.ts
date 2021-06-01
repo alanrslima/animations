@@ -12,6 +12,7 @@ import StickyFooter from './StickyFooter';
 import Carousel from './Carousel';
 import ImagesCarousel from './ImagesCarousel';
 import Modal from './Modal';
+import Toast from './Toast';
 
 export {
   ScrollTransition,
@@ -28,4 +29,5 @@ export {
   Carousel,
   ImagesCarousel,
   Modal,
+  Toast,
 };
